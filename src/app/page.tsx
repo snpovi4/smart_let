@@ -11,13 +11,13 @@ export default function Home() {
 
   return (
     <main
-      className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat text-white px-4 pt-24"
+      className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat text-white px-4 -pt-14 sm:pt-24"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/background.jpeg')",
       }}
     >
-      <div className="mt-18 text-center w-full max-w-4xl">
+      <div className="mt-34 text-center w-full max-w-4xl">
         {/* Heading */}
         <h1 className="text-3xl md:text-5xl font-bold leading-tight">
           Minimum effort, maximum convenience
