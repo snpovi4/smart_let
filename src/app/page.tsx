@@ -1,7 +1,14 @@
+"use client";
+import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { SlidersHorizontal } from "lucide-react";
 
 export default function Home() {
+  const [minBedroom, setMinBedroom] = useState("");
+  const [maxBedroom, setMaxBedroom] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
+
   return (
     <main
       className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat text-white px-4 pt-24"
@@ -29,7 +36,7 @@ export default function Home() {
                 <input
                   type="text"
                   placeholder="Search by Area, Popular Landmarks, or Nearby Location"
-                  className="flex-1 outline-none bg-transparent text-gray-800 placeholder:text-sm"
+                  className="flex-1 outline-none bg-transparent text-gray-800 text-sm placeholder:text-sm"
                 />
               </div>
 
@@ -50,14 +57,182 @@ export default function Home() {
           </div>
 
           {/* Floating Filters Button for Desktop */}
-          <div className="relative -top-9 left-0 z-0 hidden sm:block">
+          <div className={`relative -top-9 left-0 z-5 hidden sm:block ${isFilterVisible ? 'invisible' : 'visible'}`}>
             <button
-              className="flex items-center gap-1 text-red-400 hover:text-red-600 font-medium text-sm bg-white px-4 py-2 pt-10 rounded-xl transition opacity-100 cursor-allowed"
-              disabled
+              className="flex items-center gap-1 text-red-400 hover:text-red-600 font-medium text-sm bg-white px-4 py-2 pt-10 rounded-xl transition opacity-100 cursor-pointer"
+              onClick={() => setIsFilterVisible(true)}
             >
               <SlidersHorizontal size={16} />
               Filters
             </button>
+          </div>
+
+          {/* Desktop Filter Box */}
+          <div className={`relative z-0 -top-30 hidden sm:block mt-6 bg-white p-4 rounded-2xl shadow-md w-full max-w-4xl mx-auto ${isFilterVisible ? 'visible' : 'invisible'}`}>
+            <div className="flex justify-between items-start flex-wrap gap-4 pt-5">
+              {/* Top Row: Reset all + Close Button */}
+              <div className="flex justify-between items-center mb-4 w-full">
+                <button 
+                  className="text-red-400 hover:text-red-600 font-medium text-sm"
+                  onClick={() => {
+                    setMinBedroom("");
+                    setMaxBedroom("");
+                    setPropertyType("");
+                    // Reset price range inputs
+                    const minPriceInput = document.querySelector('input[placeholder="Min"]') as HTMLInputElement;
+                    const maxPriceInput = document.querySelector('input[placeholder="Max"]') as HTMLInputElement;
+                    if (minPriceInput) minPriceInput.value = '';
+                    if (maxPriceInput) maxPriceInput.value = '';
+                    // Reset all checkboxes
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+                    checkboxes.forEach(checkbox => checkbox.checked = false);
+                  }}
+                >
+                  Reset all
+                </button>
+                <button 
+                  className="text-gray-900 hover:text-gray-800 text-xl font-normal"
+                  onClick={() => {
+                    setIsFilterVisible(false);
+                    // Reset all state values
+                    setMinBedroom("");
+                    setMaxBedroom("");
+                    setPropertyType("");
+                    // Reset price range inputs
+                    const minPriceInput = document.querySelector('input[placeholder="Min"]') as HTMLInputElement;
+                    const maxPriceInput = document.querySelector('input[placeholder="Max"]') as HTMLInputElement;
+                    if (minPriceInput) minPriceInput.value = '';
+                    if (maxPriceInput) maxPriceInput.value = '';
+                    // Reset all checkboxes
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+                    checkboxes.forEach(checkbox => checkbox.checked = false);
+                  }}
+                >
+                  &times;
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 -mt-2">
+              {/* Bedrooms */}
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-2 text-left">Bedrooms</h3>
+                <div className="flex gap-2">
+                  <div className="relative w-full">
+                    <select
+                      value={minBedroom}
+                      onChange={(e) => setMinBedroom(e.target.value)}
+                      className={`w-full appearance-none rounded-xl border border-gray-200 p-2 text-sm ${
+                        minBedroom === "" ? "text-gray-400" : "text-gray-700"
+                      } pr-8`}
+                    >
+                      <option value="" disabled className="text-gray-400">
+                        Min Bedroom
+                      </option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                      <svg className="h-4 w-4 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="relative w-full">
+                    <select
+                      value={maxBedroom}
+                      onChange={(e) => setMaxBedroom(e.target.value)}
+                      className={`w-full appearance-none rounded-xl border border-gray-200 p-2 text-sm ${
+                        maxBedroom === "" ? "text-gray-400" : "text-gray-700"
+                      } pr-8`}
+                    >
+                      <option value="" disabled className="text-gray-400">
+                        Max Bedroom
+                      </option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                      <svg className="h-4 w-4 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Price Range */}
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-2 text-left">Price range</h3>
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    placeholder="Min"
+                    className="w-full rounded-xl border border-gray-200 p-2 text-sm text-gray-700 placeholder:text-sm placeholder:text-gray-400"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Max"
+                    className="w-full rounded-xl border border-gray-200 p-2 text-sm text-gray-700 placeholder:text-sm placeholder:text-gray-400"
+                  />
+                </div>
+              </div>
+
+              {/* Property Type */}
+              <div>
+                <h3 className="font-semibold text-gray-800 mb-2 text-left">Property Type</h3>
+                <div className="relative">
+                  <select
+                    value={propertyType}
+                    onChange={(e) => setPropertyType(e.target.value)}
+                    className={`w-full appearance-none rounded-xl border border-gray-200 p-2 text-sm ${
+                      propertyType === "" ? "text-gray-400" : "text-gray-700"
+                    } pr-8`}
+                  >
+                    <option value="" disabled className="text-gray-400">
+                      Any Type
+                    </option>
+                    <option>Residential</option>
+                    <option>Commercial</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+                    <svg className="h-4 w-4 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Options */}
+            <div className="mt-5">
+              <h3 className="font-semibold text-gray-800 mb-2 text-left">Options</h3>
+              <div className="flex flex-wrap gap-10">
+                {["Furnished", "Unfurnished", "Swimming Pool", "Gym", "Pet Friendly"].map(
+                  (option) => (
+                    <label
+                      key={option}
+                      className="flex items-center gap-2 text-gray-700 text-sm"
+                    >
+                      <input type="checkbox" className="accent-red-400 " />
+                      {option}
+                    </label>
+                  )
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-4 flex justify-end gap-4">
+              <button className="text-gray-900 hover:text-gray-800 font-medium text-sm">
+                Cancel
+              </button>
+              <button className="border bg-white-400 hover:bg-red-500 text-red-400 hover:text-white border-red-400 font-semibold px-6 py-2 rounded-xl text-sm">
+                Apply
+              </button>
+            </div>
           </div>
         </div>
 
