@@ -3,7 +3,8 @@ import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { SlidersHorizontal } from "lucide-react";
 
-export function SearchInput() {
+// Convert SearchInput to a regular function component without export
+function SearchInput() {
   return (
     <div className="flex items-center w-full sm:flex-1 gap-2 bg-gray-100 rounded-xl border border-gray-100 px-4 py-3">
       <FiSearch className="text-gray-900 text-lg" />
