@@ -157,7 +157,7 @@ const Navbar = () => {
                       <a
                         key={subIdx}
                         href={item.href}
-                        className="block py-2 text-sm text-black hover:text-red-400"
+                        className="block py-2 px-1 text-sm text-black hover:text-red-400"
                       >
                         {item.name}
                       </a>

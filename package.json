@@ -8,11 +8,12 @@
     "start": "next start",
     "lint": "next lint",
     "predeploy": "npm run build",
-  "deploy": "gh-pages -d out"
+    "deploy": "gh-pages -d out"
   },
   "dependencies": {
     "@fontsource/mulish": "^5.2.5",
     "@fontsource/urbanist": "^5.2.5",
+    "framer-motion": "^12.6.2",
     "lucide-react": "^0.485.0",
     "next": "15.2.4",
     "react": "^19.0.0",

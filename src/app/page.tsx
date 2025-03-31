@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import { SlidersHorizontal } from "lucide-react";
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Convert SearchInput to a regular function component without export
 function SearchInput() {
@@ -22,6 +23,19 @@ export default function Home() {
   const [maxBedroom, setMaxBedroom] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [isFilterVisible, setIsFilterVisible] = useState(false);
+  const [rotatingWord, setRotatingWord] = useState("smartest");
+  const words = ["sleekest", "fastest", "smartest", "coolest", "newest"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotatingWord((current) => {
+        const currentIndex = words.indexOf(current);
+        return words[(currentIndex + 1) % words.length];
+      });
+    }, 1400); // Change word every 1.4 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <main
@@ -37,7 +51,20 @@ export default function Home() {
           Minimum effort, maximum convenience
         </h1>
         <p className="mt-3 text-base md:text-lg font-normal text-gray-100">
-          A new way of renting in Dhaka
+          The{" "}
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={rotatingWord}
+              initial={{ rotateX: 90, opacity: 0 }}
+              animate={{ rotateX: 0, opacity: 1 }}
+              exit={{ rotateX: -90, opacity: 0 }}
+              transition={{ duration: 0.12, ease: "easeInOut" }}
+              className="text-red-400 inline-block"
+            >
+              {rotatingWord}
+            </motion.span>
+          </AnimatePresence>
+          {" "}way of renting in Dhaka
         </p>
 
         {/* Search Box with Floating Filter Button */}
@@ -273,7 +300,7 @@ export default function Home() {
             ${isFilterVisible ? 'block' : 'hidden'}
           `}
         >
-          <div className="fixed inset-x-4 bottom-4 top-20 bg-white rounded-2xl overflow-y-auto">
+          <div className="fixed inset-x-4 top-20 bg-white rounded-2xl overflow-y-auto max-h-[calc(100vh-100px)]">
             <div className="p-4">
               {/* Top Row: Reset all + Close Button */}
               <div className="flex justify-between items-center mb-4">
@@ -435,9 +462,9 @@ export default function Home() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="mt-4 flex justify-end gap-4">
+                <div className="flex justify-end gap-4">
                   <button 
-                    className="text-gray-900 hover:text-gray-800 font-medium text-sm"
+                    className="text-gray-900 hover:text-gray-800 font-medium text-sm "
                     onClick={() => {
                       setIsFilterVisible(false);
                       // Reset all state values
