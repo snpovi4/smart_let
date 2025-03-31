@@ -3,6 +3,19 @@ import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { SlidersHorizontal } from "lucide-react";
 
+export function SearchInput() {
+  return (
+    <div className="flex items-center w-full sm:flex-1 gap-2 bg-gray-100 rounded-xl border border-gray-100 px-4 py-3">
+      <FiSearch className="text-gray-900 text-lg" />
+      <input
+        type="text"
+        placeholder="Search by Area, Popular Landmarks, or Nearby Location"
+        className="flex-1 outline-none bg-transparent text-gray-800 text-sm placeholder:text-sm"
+      />
+    </div>
+  );
+}
+
 export default function Home() {
   const [minBedroom, setMinBedroom] = useState("");
   const [maxBedroom, setMaxBedroom] = useState("");
@@ -11,13 +24,13 @@ export default function Home() {
 
   return (
     <main
-      className="flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat text-white px-4 -pt-14 sm:pt-24"
+      className="flex min-h-screen items-start sm:items-center justify-center bg-cover bg-center bg-no-repeat text-white px-4 pt-44 sm:pt-20"
       style={{
         backgroundImage:
           "linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/background.jpeg')",
       }}
     >
-      <div className="mt-34 text-center w-full max-w-4xl">
+      <div className="mt-0 sm:mt-34 text-center w-full max-w-4xl">
         {/* Heading */}
         <h1 className="text-3xl md:text-5xl font-bold leading-tight">
           Minimum effort, maximum convenience
@@ -31,14 +44,7 @@ export default function Home() {
           <div className="relative bg-white rounded-2xl w-full max-w-4xl mx-auto z-10">
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full px-3 py-3">
               {/* Search Input */}
-              <div className="flex items-center w-full sm:flex-1 gap-2 bg-gray-100 rounded-xl border border-gray-100 px-4 py-3">
-                <FiSearch className="text-gray-900 text-lg" />
-                <input
-                  type="text"
-                  placeholder="Search by Area, Popular Landmarks, or Nearby Location"
-                  className="flex-1 outline-none bg-transparent text-gray-800 text-sm placeholder:text-sm"
-                />
-              </div>
+              <SearchInput />
 
               {/* Buttons Wrapper */}
               <div className="flex w-full gap-3 sm:flex-0 sm:w-auto">
@@ -212,14 +218,14 @@ export default function Home() {
             {/* Options */}
             <div className="mt-5">
               <h3 className="font-semibold text-gray-800 mb-2 text-left">Options</h3>
-              <div className="flex flex-wrap gap-10">
+              <div className="flex flex-row flex-wrap gap-4">
                 {["Furnished", "Unfurnished", "Swimming Pool", "Gym", "Pet Friendly"].map(
                   (option) => (
                     <label
                       key={option}
                       className="flex items-center gap-2 text-gray-700 text-sm"
                     >
-                      <input type="checkbox" className="accent-red-400 " />
+                      <input type="checkbox" className="accent-red-400" />
                       {option}
                     </label>
                   )
@@ -412,7 +418,7 @@ export default function Home() {
                 {/* Options */}
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-2 text-left">Options</h3>
-                  <div className="flex flex-col gap-3">
+                  <div className="grid grid-cols-2 gap-3">
                     {["Furnished", "Unfurnished", "Swimming Pool", "Gym", "Pet Friendly"].map(
                       (option) => (
                         <label
